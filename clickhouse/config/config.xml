@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<clickhouse>
+    <!-- Default configuration for ClickHouse -->
+    
+    <!-- Network settings -->
+    <listen_host>::</listen_host>
+    <http_port>8123</http_port>
+    <tcp_port>9000</tcp_port>
+    <mysql_port>3306</mysql_port>
+    <postgresql_port>5432</postgresql_port>
+    <grpc_port>9100</grpc_port>
+    <https_port>8443</https_port>
+    <tcp_secure_port>9440</tcp_secure_port>
+    <interserver_http_port>9009</interserver_http_port>
+
+    <!-- Log settings -->
+    <logger>
+        <level>information</level>
+        <log>/var/log/clickhouse-server/clickhouse-server.log</log>
+        <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+        <size>1000M</size>
+        <count>10</count>
+    </logger>
+
+    <!-- Path for data -->
+    <path>/var/lib/clickhouse/</path>
+    <tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
+
+    <!-- Timezone -->
+    <timezone>UTC</timezone>
+
+    <!-- Allow remote queries -->
+    <remote_servers>
+        <default>
+            <shard>
+                <replica>
+                    <host>clickhouse</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </default>
+    </remote_servers>
+
+    <!-- Users -->
+    <users>
+        <default>
+            <password>clickhousepass</password>
+            <networks>
+                <ip>::/0</ip>
+            </networks>
+            <quota>default</quota>
+            <profile>default</profile>
+        </default>
+    </users>
+
+    <!-- Quotas -->
+    <quotas>
+        <default>
+            <interval>
+                <duration>3600</duration>
+                <queries>0</queries>
+                <errors>0</errors>
+                <result_rows>0</result_rows>
+                <read_rows>0</read_rows>
+                <execution_time>0</execution_time>
+            </interval>
+        </default>
+    </quotas>
+
+    <!-- Profiles -->
+    <profiles>
+        <default>
+            <max_memory_usage>10000000000</max_memory_usage>
+            <max_rows_to_read>1000000000</max_rows_to_read>
+            <max_bytes_before_external_sort>1000000000</max_bytes_before_external_sort>
+            <max_bytes_to_read>10000000000</max_bytes_to_read>
+        </default>
+    </profiles>
+</clickhouse>

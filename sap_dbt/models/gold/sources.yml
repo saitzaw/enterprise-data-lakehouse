@@ -1,0 +1,71 @@
+version: 2
+
+sources:
+  - name: delta
+    description: "Silver zone Delta tables (cleaned & deduplicated data)"
+    database: sparkdb
+    schema: public
+    tables:
+      - name: sap_silver_sales_orders_header
+        description: "Sales order header data from VBAK table"
+        columns:
+          - name: vbak_mandt
+            description: "Client"
+          - name: vbak_vbeln
+            description: "Sales document number"
+          - name: vbak_audat
+            description: "Order date"
+          - name: vbak_netwr
+            description: "Net order value"
+          - name: vbak_kunnr
+            description: "Customer ID"
+          - name: is_current
+            description: "SCD Type 2 current record flag"
+            
+      - name: sap_silver_sales_orders_lines
+        description: "Sales order line items from VBAP table"
+        columns:
+          - name: vbap_mandt
+            description: "Client"
+          - name: vbap_vbeln
+            description: "Sales document number"
+          - name: vbap_posnr
+            description: "Item number"
+          - name: vbap_matnr
+            description: "Material ID"
+          - name: vbap_kwmeng
+            description: "Order quantity"
+          - name: vbap_netwr
+            description: "Net line item value"
+          - name: is_current
+            description: "SCD Type 2 current record flag"
+
+      - name: sap_silver_customers
+        description: "Customer master data from KNA1 table"
+        columns:
+          - name: kna1_mandt
+            description: "Client"
+          - name: kna1_kunnr
+            description: "Customer ID"
+          - name: kna1_name1
+            description: "Customer name"
+          - name: kna1_ort01
+            description: "City"
+          - name: kna1_land1
+            description: "Country"
+          - name: is_current
+            description: "SCD Type 2 current record flag"
+
+      - name: sap_silver_materials
+        description: "Material master data from MAKT/MARA tables"
+        columns:
+          - name: matnr
+            description: "Material ID"
+          - name: maktx
+            description: "Material description"
+          - name: matkl
+            description: "Material class"
+          - name: meins
+            description: "Base unit of measure"
+          - name: is_current
+            description: "SCD Type 2 current record flag"

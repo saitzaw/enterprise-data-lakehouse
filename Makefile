@@ -98,3 +98,24 @@ dev-dbt-shell:
 
 dev-dbt-debug:
 	docker exec -it dbt dbt debug
+# ClickHouse targets for gold layer analytics
+dev-clickhouse-up:
+	docker compose up -d clickhouse
+
+dev-clickhouse-shell:
+	docker exec -it clickhouse clickhouse-client -u default -p clickhousepass
+
+dev-clickhouse-logs:
+	docker logs clickhouse
+
+dev-clickhouse-down:
+	docker compose down clickhouse
+
+dev-dbt-run-gold:
+	docker exec -it dbt bash -c "cd /opt/airflow/sap_dbt && dbt run --select tag:gold --target clickhouse"
+
+dev-dbt-test-gold:
+	docker exec -it dbt bash -c "cd /opt/airflow/sap_dbt && dbt test --select tag:gold --target clickhouse"
+
+dev-dbt-docs-gold:
+	docker exec -it dbt bash -c "cd /opt/airflow/sap_dbt && dbt docs generate --target clickhouse"

@@ -26,11 +26,14 @@
 - Apache Airflow 
 - Elastic Search
 - Jupyter notebook / Lab for analysis
+- dbt (data build tool) for SQL transformations
+- ClickHouse for OLAP analytics
 
 # Database 
 - Postgresql 15
 - Mysql 
 - MongoDB
+- ClickHouse (gold layer analytics)
 
 # Additional requirements
 - Vscode with Metal extension 

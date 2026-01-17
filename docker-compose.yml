@@ -282,6 +282,27 @@ services:
     volumes:
       - ./lakehouse:/data
 
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    ports:
+      - "8123:8123"    # HTTP interface
+      - "9000:9000"    # Native protocol
+      - "9009:9009"    # Replication port
+    environment:
+      CLICKHOUSE_DB: default
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: clickhousepass
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    volumes:
+      - ./clickhouse/data:/var/lib/clickhouse
+      - ./clickhouse/config:/etc/clickhouse-server
+    healthcheck:
+      test: ["CMD", "clickhouse-client", "-u", "default", "-p", "clickhousepass", "--query", "SELECT 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
 volumes:
   pg_data:
   spark-logs:
