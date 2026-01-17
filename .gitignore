@@ -46,3 +46,4 @@ sap_dbt/seeds/
 sap_dbt/profiles/profiles.yml
 data/*
 lakehouse/*
+.github/
